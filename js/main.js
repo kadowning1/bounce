@@ -10,11 +10,6 @@ const x = document.getElementById("myP").innerHTML; //reference to paragraph
 
 count = '0'; //keeping count of number of balls
 
-//if (ball[j].exists) {
-//increment
-//decrement
-
-
 // function to generate random number. takes two numbers and returns a random in the range
 
 function random(min, max) {
@@ -82,7 +77,7 @@ Ball.prototype.collisionDetect = function() {
 
       if (distance < this.size + balls[j].size) { //if collision is detected, change color of the ball
         balls[j].color = this.color = 'rgb(' + random(0, 255) + ',' + random(0, 255) + ',' + random(0, 255) + ')';
-        //count++;
+        count++; //add count if ball collision detect
       }
     }
   }
@@ -154,13 +149,11 @@ EvilCircle.prototype.collisionDetect = function() {
       const dy = this.y - balls[j].y; //collision alogorithm
       const distance = Math.sqrt(dx * dx + dy * dy); //collision alogorithm
 
-      if (distance < this.size + balls[j].size)//{
+      if (distance < this.size + balls[j].size){
         balls[j].exists = false;
-        //count--;
-        //if (count === 0) {
-          //balls[j].exists = false
-        //}
+        count--;// subtract score if eaten by evil circle
       }
+    }
     }
 };
 
