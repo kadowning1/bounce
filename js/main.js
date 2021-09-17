@@ -11,8 +11,8 @@ const x = document.getElementById("myP").innerHTML; //reference to paragraph
 count = '0'; //keeping count of number of balls
 
 //if (ball[j].exists) {
-    //increment
-    //decrement
+//increment
+//decrement
 
 
 // function to generate random number. takes two numbers and returns a random in the range
@@ -37,13 +37,6 @@ function Ball(x, y, velX, velY, color, size, exists) {
   Shape.call(x, y, velX, velY, exists); //inheriting from Shape
   this.color = color; //each ball gets a color
   this.size = size; //each ball gets a size -- radius in pixels
-}
-
-//added EvilCircle constructor
-function EvilCircle(x, y, velX, velY, exists) {
-  Shape.call(this, x, y, 20, 20, exists); //inherit from Shape
-  this.color = 'red'; // changing color of evilCircle
-  this.size = 50; // changing size of evilCircle
 }
 
 // define ball draw method
@@ -89,21 +82,27 @@ Ball.prototype.collisionDetect = function() {
 
       if (distance < this.size + balls[j].size) { //if collision is detected, change color of the ball
         balls[j].color = this.color = 'rgb(' + random(0, 255) + ',' + random(0, 255) + ',' + random(0, 255) + ')';
-        count++;
-    }
+        //count++;
+      }
     }
   }
 };
 
+//added EvilCircle constructor
+function EvilCircle(x, y, velX, velY, exists) {
+  Shape.call(this, x, y, 20, 20, exists); //inherit from Shape
+  this.color = 'red'; // changing color of evilCircle
+  this.size = 50; // changing size of evilCircle
+}
 //define evilCircle draw method
 
 EvilCircle.prototype.draw = function() {
-  ctx.beginPath();
-  ctx.strokeStyle = this.color;
-  ctx.stroke();
+  ctx.beginPath(); //state we want to draw a shape
+  ctx.strokeStyle = this.color; //set to the stroke property to not fill
   ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
-  ctx.fill();
-  ctx.lineWidth = 3;
+  ctx.lineWidth = 3; //width of the line of the circle
+  ctx.stroke(); //state we want an unfilled stroke path of the arc above
+  ctx.fill(); //finish drawing path
 };
 
 //define EvilCircle check bounds method.  this keeps the evilCircle on the screen
@@ -134,7 +133,7 @@ EvilCircle.prototype.checkBounds = function() {
 EvilCircle.prototype.setControls = function() {
   let _this = this; //private function - would think this is showing the the keys used to control the circle are private
   window.onkeydown = function(e) {
-    if (e.key === 'a') {
+    if (e.key === 'a') { //controls for the game
       _this.x -= _this.velX;
     } else if (e.key === 'd') {
       _this.x += _this.velX;
@@ -150,20 +149,19 @@ EvilCircle.prototype.setControls = function() {
 
 EvilCircle.prototype.collisionDetect = function() {
   for (let j = 0; j < balls.length; j++) {
-    if (balls[j].exists) {
-      const dx = this.x - balls[j].x;
-      const dy = this.y - balls[j].y;
-      const distance = Math.sqrt(dx * dx + dy * dy);
+    if (balls[j].exists) { //code runs if ball exists
+      const dx = this.x - balls[j].x; //collision alogorithm
+      const dy = this.y - balls[j].y; //collision alogorithm
+      const distance = Math.sqrt(dx * dx + dy * dy); //collision alogorithm
 
-      if (distance < this.size + balls[j].size) {
+      if (distance < this.size + balls[j].size)//{
         balls[j].exists = false;
-        count--;
-      if (count === 0){
-          balls[j].exists = false
-      }  
+        //count--;
+        //if (count === 0) {
+          //balls[j].exists = false
+        //}
       }
     }
-  }
 };
 
 // define array to store balls and populate it
@@ -191,16 +189,16 @@ function loop() {
   ctx.fillRect(0, 0, width, height); //draws rectangle
 
   //creating evilCircle instance
-    //let testCircle = new evilCircle (50, 100, 4, 4, 'blue', 10); 
-   // setControls();
+  //let testCircle = new evilCircle (50, 100, 4, 4, 'blue', 10); 
+  // setControls();
   for (let i = 0; i < balls.length; i++) {
     balls[i].draw(); //loops through draw function
     balls[i].update(); //loops through update method
     balls[i].collisionDetect(); //loops through collisionDetect method
   }
-  testCircle.draw(); // call evilCircle (says Ball on instructions)
-  testCircle.checkBounds();
-  testCircle.collisionDetect();
+  //testCircle.draw(); // call evilCircle (says Ball on instructions)
+  //testCircle.checkBounds();
+  //testCircle.collisionDetect();
 
   requestAnimationFrame(loop); //running function loop over and over again
 }

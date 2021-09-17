@@ -13,6 +13,7 @@
 
 ### Variables
 * Score Counter
+* Balls
 
 ### INIT
 * CREATE Shape()
