@@ -10,6 +10,11 @@ const x = document.getElementById("myP").innerHTML; //reference to paragraph
 
 count = '0'; //keeping count of number of balls
 
+//if (ball[j].exists) {
+//increment added in collision detection ball
+//decrement added in collision detection evilcircle
+
+
 // function to generate random number. takes two numbers and returns a random in the range
 
 function random(min, max) {
